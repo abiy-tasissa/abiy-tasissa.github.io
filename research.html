@@ -1,0 +1,136 @@
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+</head>
+
+<nav>
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="research.html">Research</a></li>
+<li><a href="publications.html">Publications</a></li>
+<li><a href="teaching.html">Teaching</a></div></li>
+<li><a href="cv.html">CV</a></div></li>
+<li><a href="misc.html">Misc</a></div></li>
+
+</ul>
+</nav>
+
+<div class="container">
+
+  	<div class="research">
+  		<h2>Research</h2>
+
+  		<p>
+My research is broadly in applied mathematics with my current research interests at the intersection of  matrix completion, compressive sensing,  high-dimensional probability  and convex optimization. Recently, I have also been learning about optimal transport and have started a research project on the graph matching problem.
+</p>
+
+<h3> Euclidean Distance Geometry problem </h3>
+
+<p>
+Given a partial distance matrix \(D \in \mathbb{R}^{n\times n}\), the Euclidean Distance Geometry problem
+asks if the positions of the underlying \(n \) points can be recovered. As one can guess, if
+there is a solution, the solution is unique up to rigid transformations and translations.
+A previous work proposed solving
+the distance geometry problem by considering a nuclear norm minimization
+problem for the Gram matrix. Working with my advisor Professor Rongjie Lai at RPI,
+we theoretically analyze the minimization program by recasting it as a matrix completion
+problem of a low-rank \(r\) Gram matrix with respect to a suitable basis. 
+Introducing a dual basis approach, assuming that the underlying Gram matrix obeys coherence
+condition with parameter \(\nu\), the main result shows that the underlying configuration of \(n\)
+points can be recovered with very high probability from \(O(nrν log^2
+(n))\) uniformly random distance samples. In addition, we designed
+simple and fast algorithm to solve the Euclidean distance geometry problem.
+Numerical tests on different three dimensional data and protein molecules show promising results.
+This work has been submitted to IEEE transactions of information theory and a draft
+is available <a href="ExactReconEDG_single_column.pdf">here</a>.<br>
+<b> Future Work: </b>
+There are interesting directions for future work. First, the current work
+assumes that the partial distance information is exact. In applications,
+with measurements prone to noise, the partial distance information
+is noisy. One direction is to extend the current analysis to the 
+noisy Euclidean Distance Geometry problem. Second, in most applications,
+the partial distance matrix is not uniformly random. In other words, there is no
+oracle providing such information. With this, it is of interest to 
+study, analytically and numerically, the Euclidean Distance Geometry problem
+under structured partial information.
+</p>
+
+<h3> General Matrix Completion </h3>
+
+<p>
+Given some entries of a matrix \(M\), could one recover \(M\)?
+Without any assumptions, the answer is negative and in general is not possible. Assume
+that the underlying matrix is low-rank and the entries are sampled
+uniformly at random. This is the matrix completion problem. Very remarkably,
+previous theoretical works have established that, under certain conditions,
+the underlying matrix can be recovered by solving a convex program, a nuclear norm minimization
+problem. In a follow up work, David Gross extended the matrix completion problem
+to the recovery of a low rank symmetric matrix given a few expansion coefficients with 
+respect to an orthonormal basis. Motivated by the Euclidean Distance Geometry
+problem and much inspired by the result of David gross, with my advisor Professor Rongjie Lai,
+we considered the recovery of a low rank matrix given a few expansion coefficients with respect to any basis. Our analysis is RIPless based on dual certificates and using a dual basis approach. We introduce
+a condition on the basis matrices named as the correlation condition. The correlation condition
+can be computed in computational time \(O(n^3)\) and holds for many cases of deterministic basis
+where RIP might not hold or is NP hard to verify. If the correlation condition holds and 
+the underlying low rank matrix obeys the coherence condition with parameter \(\nu\),  under additional mild
+assumptions, our main result shows that the true matrix can be recovered with very high probability from 
+\(O(nr\nu\log^2n)\) uniformly random expansion coefficients. A paper on the output of this work is currently under preparation. A rough draft is available <a href="matrix_completion_general_paper.pdf">here</a>.
+<br>
+<b> Future Work: </b>
+I am interested in pursuing this project further. The first goal is to do a more detailed analysis
+of the correlation condition. The second goal is to use the framework of the general matrix completion
+problems in certain applications and investigate its effectiveness. 
+</p>
+
+<h3> Fast Algorithms for the Graph Matching Problem </h3>
+
+<p>
+
+Consider two weighted undirected graphs \(G_{1} = (V_1, E_1)\), \(|V_1|=n\), with weight function 
+\(W_1 : E_2 \rightarrow \mathbb{R}\) 
+and \(G_{2} = (V_2, E_2)\), \(|V_2|=n\), with weight function \(W_2 : E_2 \rightarrow \mathbb{R}\). The weighted graph matching problem 
+concerns with finding the permutation matrix \(P\) that ``best aligns'' \(A\) and \(B\) where \(A\in \mathbb{R}^{n\times n}\) and \(B\in \mathbb{R}^{n\times n}\) are the weighted adjacency matrices
+of \(G_1\) and \(G_2\) respectively. Formally, the goal is to find a \(P\) such that, on some appropriate metric, the distance between \(A\) and \(PBP^{T}\)
+is minimized. Choosing the metric to be the Frobenius norm, the problem can be stated as follows <br />
+\(
+\hspace{20em}\underset{P}{\min} \quad ||AP-PB||_{F}^{2}
+\)
+<br />
+For example, if \(G_{1}\) and \(G_2\) are isomorphic, the graph matching problem is equivalent to finding a permutation matrix \(P\) such that \(AP = PB\). 
+ For small \(n\), given \(A\) and \(B\), 
+one can consider all the possible permutation matrices to identify the correct one.  However, as  
+\(n\) increases, this procedure is computationally intractable. In fact, minimizing the graph matching over the set of permutation matrices is NP-Hard.  
+One approach is a convex relaxation of the graph matching problem
+by minimizing over the set of  doubly stochastic matrices \(D\), \(D = \{P \in \mathbb{R}^{n\times n} : P^{T}1=P1=1,P\succeq 0\}\).
+This choice is sensible since the Birkhoff-Von Neumann theorem states that \(D\) is known to be the convex hull for the set of permutation matrices. 
+With this, the relaxed graph matching problem can be written as follows.<br />
+\(
+\hspace{20em}\underset{P \in D}{\min} \quad ||AP-PB||_{F}^{2}
+\)
+<br />
+Most current algorithms for the relaxed problem have a complexity of \(O(n^3)\) resulting from use of the Hungarian algorithm to
+project the final solution to the set of permutation matrices. This is expensive in applications like medical imaging and social
+network analysis where the size of graph easily exceeds \(n = 10^{3}\). An ongoing research project is to design a fast algorithm
+to this problem. More precisely, under certain conditions of the graph, the goal is in a principled way to formulate an optimization
+algorithm that has a computational complexity of \(O(n^2)\). Preliminary numerical experiments show promising result but
+the analysis of the full scope of the problem is an ongoing effort. 
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+  	</div>
+  </div>
+
+</html>
