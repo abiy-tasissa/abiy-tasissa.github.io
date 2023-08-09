@@ -1,6 +1,7 @@
 body {
     margin: 30px auto;
     width: 75%;
+
 }
 
 img{
@@ -27,7 +28,7 @@ nav ul li, footer ul li {
 }
 
 a {
-    text-decoration: none;
+    text-decoration: underline;
     color: 000;
     font-size: 20px;
 }
@@ -57,61 +58,43 @@ ul.posts li {
     list-style: none;
 }
 
+
 .publications { margin: 0px 0px 60px; }
-.publications h2 { font-size: 2em; }
+.publications h3 { font-size: 1em; }
 .publications p {
-    font-size: 1.2em;
+    font-size: 1em;
     line-height:1.4em;
     color: #000;
 }
-
-.research { margin: 0px 0px 60px; }
-.research h2 { font-size: 2em; }
-.research p {
-    line-height:1.4em;
-    font-size: 1.1em;
-    color: #111;
-    text-align: justify;
-}
-.research a {
-    text-decoration: none;
-    color: #111;
+.publications ol li { margin-bottom: 10px; }
+.publications a {
+    text-decoration: underline;
+    color: #000;
     font-size: 1.0em;
 }
+
 
 .teaching { margin: 0px 0px 60px; }
-.teaching h2 { font-size: 2em; }
+.teaching h3 { 
+
+font-size: 1em;
+
+ }
 .teaching p {
     line-height:1.4em;
-    font-size: 1.2em;
-    color: #111;
+    font-size: 1em;
+    color: #000;
 }
+.teaching ol li { margin-bottom: 10px; }
 
-.misc { margin: 0px 0px 60px; }
-.misc h2 { font-size: 2em; }
-.misc p {
-    line-height:1.4em;
-    font-size: 1.0em;
-    color: #111;
-    text-align: justify;
-
-}
-.misc a {
-    line-height:1.4em;
+.teaching a {
+    text-decoration: underline;
     color: #000;
     font-size: 1.0em;
 }
 
 
-.cv { margin: 0px 0px 60px; }
-.cv h2 { font-size: 2em; }
-.cv p {
-    line-height:1.4em;
-    font-size: 1.4em;
-    color: #111;
-}
-.cv a {
-    line-height:1.4em;
-    color: #111;
-    font-size: 1.0em;
-}
+
+
+
+
