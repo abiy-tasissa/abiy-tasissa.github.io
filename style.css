@@ -17,14 +17,14 @@ nav ul, footer ul {
     padding: 0px;
     list-style: none;
     font-weight: bold;
-    margin-bottom: 0.8cm;
+    margin-bottom: 10px;
 }
 
 nav ul li, footer ul li {
     display: inline-grid;
     margin-right: 50px;
     padding-right: 80px;
-    margin-bottom: 0.8cm;
+    margin-bottom: 10px;
 
 
 }
