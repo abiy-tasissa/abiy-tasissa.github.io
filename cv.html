@@ -1,82 +1,637 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Abiy Tasissa</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --text-color: #333;
+            --text-light: #666;
+            --text-muted: #888;
+            --bg-light: #f8f9fa;
+            --bg-white: #ffffff;
+            --border-light: #e9ecef;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.15);
+            --radius: 8px;
+            --max-width: 1200px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--bg-light);
+        }
+
+        /* Navigation */
+        .nav {
+            background: var(--bg-white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--secondary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--bg-white);
+                flex-direction: column;
+                padding: 1rem 2rem;
+                box-shadow: var(--shadow);
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .nav-menu.active {
+                transform: translateX(0);
+            }
+
+            .nav-link::after {
+                display: none;
+            }
+        }
+
+        /* Main Content */
+        .main {
+            margin-top: 70px;
+            min-height: calc(100vh - 70px);
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: var(--bg-white);
+            border-radius: var(--radius);
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        /* CV Download Section */
+        .cv-download {
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            color: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: white;
+            color: var(--secondary-color);
+            text-decoration: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* CV Sections */
+        .cv-section {
+            background: var(--bg-white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 1.5rem 2rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        /* Personal Info */
+        .personal-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .info-icon {
+            color: var(--secondary-color);
+            width: 20px;
+            text-align: center;
+        }
+
+        .info-link {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .info-link:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Experience/Education Items */
+        .cv-item {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .cv-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .item-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .item-date {
+            color: var(--secondary-color);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .item-institution {
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-description {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .item-description ul {
+            margin: 0.5rem 0 0 1.5rem;
+        }
+
+        .item-description li {
+            margin-bottom: 0.25rem;
+        }
+
+        /* Skills/Research Areas */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-category {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .skill-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: var(--secondary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* Awards/Honors */
+        .award-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+        }
+
+        .award-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .award-title {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .award-year {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        /* Print Styles */
+        @media print {
+            .nav, .cv-download, .footer {
+                display: none !important;
+            }
+            
+            .main {
+                margin-top: 0;
+            }
+            
+            .cv-section {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                break-inside: avoid;
+            }
+            
+            .section-header {
+                background: #333 !important;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            .page-header {
+                padding: 2rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .section-content {
+                padding: 1.5rem;
+            }
+
+            .item-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .personal-info {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .award-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Utility Classes */
+        .mb-2 { margin-bottom: 1rem; }
+        .mb-3 { margin-bottom: 1.5rem; }
+        .text-center { text-align: center; }
+    </style>
 </head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Abiy Tasissa</a>
+            <button class="nav-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="publications.html" class="nav-link">Publications</a></li>
+                <li><a href="teaching.html" class="nav-link">Teaching</a></li>
+                <li><a href="#" class="nav-link active">CV</a></li>
+            </ul>
+        </div>
+    </nav>
 
-<nav>
-<ul>
-<li><a href="index.html">Home</a></li>
-<li><a href="research.html">Research</a></li>
-<li><a href="teaching.html">Teaching</a></div></li>
-<li><a href="cv.html">CV</a></div></li>
-<li><a href="misc.html">Misc</a></div></li>
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Page Header -->
+            <header class="page-header fade-in">
+                <h1 class="page-title">Curriculum Vitae</h1>
+                <p class="page-subtitle">
+                    Complete academic and professional profile including education, experience
+                    and research contributions.
+                </p>
+            </header>
 
-</ul>
-</nav>
+            <!-- CV Download -->
+            <section class="cv-download fade-in" style="animation-delay: 0.1s;">
+                
+                <a href="CVAbiyTasissa.pdf" class="download-btn">
+                    <i class="fas fa-download"></i>
+                    Download CV
+                </a>
+            </section>
 
-<div class="container">
+            <!-- Contact Information -->
+            <section class="cv-section fade-in" style="animation-delay: 0.2s;">
+                <div class="section-header">
+                    <i class="fas fa-user"></i>
+                    Contact Information
+                </div>
+                <div class="section-content">
+                    <div class="personal-info">
+                        <div class="info-item">
+                            <i class="fas fa-envelope info-icon"></i>
+                            <a href="mailto:Abiy.Tasissa@tufts.edu" class="info-link">
+                                Abiy.Tasissa@tufts.edu
+                            </a>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-building info-icon"></i>
+                            <span>Joyce Cummings Center, Room 563</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-university info-icon"></i>
+                            <span>Department of Mathematics, Tufts University</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt info-icon"></i>
+                            <span>Medford, MA 02155</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-  	<div class="cv">
- <h2>CV</h2>
+            <!-- Current Position -->
+            <section class="cv-section fade-in" style="animation-delay: 0.3s;">
+                <div class="section-header">
+                    <i class="fas fa-briefcase"></i>
+                    Current Position
+                </div>
+                <div class="section-content">
+                    <div class="cv-item">
+                        <div class="item-header">
+                            <div class="item-title">Assistant Professor</div>
+                            <div class="item-date">2021 - Present</div>
+                        </div>
+                        <div class="item-institution">Department of Mathematics, Tufts University</div>
+                        <div class="item-description">
+                            Research and teaching in applied mathematics with focus on optimization, 
+                            applied linear algebra analysis, and statistical learning.
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-<h2> Education</h2>
-<ul>
-  <p><li>Ph.D in Mathematics, Rensselaer Polytechnic Institute, 2019 (expected)</li></p>
-  <p><li>M.S. in Aeronautics and Astronautics, Massachusetts Institute of Technology, 2014 </li></p>
-  <p><li>B.S. in Mathematics, Massachusetts Institute of Technology, 2012</li></p>
-</ul>
-      
+            <!-- Education -->
+            <section class="cv-section fade-in" style="animation-delay: 0.4s;">
+                <div class="section-header">
+                    <i class="fas fa-graduation-cap"></i>
+                    Education
+                </div>
+                <div class="section-content">
+                    <div class="cv-item">
+                        <div class="item-header">
+                            <div class="item-title">Ph.D. in Applied Mathematics</div>
+                            <div class="item-date">2019</div>
+                        </div>
+                        <div class="item-institution">Rensselaer Polytechnic Institute</div>
+                        <div class="item-description">
+                            <strong>Dissertation:</strong> Convex Relaxations: Theory and algorithms, Euclidean distance geometry problem and beyond<br>
+                            <strong>Advisor:</strong> Prof. Rongjie Lai
+                        </div>
+                    </div>
+                    
+                    <div class="cv-item">
+                        <div class="item-header">
+                            <div class="item-title">M.S. in Aeronautics and Astronautics</div>
+                            <div class="item-date">2014</div>
+                        </div>
+                        <div class="item-institution">Massachusetts Institute of Technology</div>
+                        <div class="item-description">
+                            <strong>Thesis:</strong> On the formation of Friedlander waves in a compressed gas driven shock tube<br>
+                            <strong>Advisor:</strong> Prof. Raul Radovitzky
+                        </div>
+                    </div>
+                    
+                    <div class="cv-item">
+                        <div class="item-header">
+                            <div class="item-title">B.S. in Mathematics</div>
+                            <div class="item-date">2012</div>
+                        </div>
+                        <div class="item-institution">Massachusetts Institute of Technology</div>
+                        
+                    </div>
+                </div>
+            </section>
 
-<h2>Publications</h2>
-      <h2><a href="https://scholar.google.com/citations?user=QpCV5uIAAAAJ&hl=en"><img src="googlescholar.jpg" width="150" alt="SZ" /></a></h2>
+           
+        </div>
+    </main>
 
-<ol>
-<p><li>Tasissa, Abiy F., et al. "On the formation of Friedlander waves in a compressed-gas-driven shock tube." Proc. R. Soc. A. Vol. 472. No. 2186. 
-  The Royal Society, 2016. </li></p>
-<p><li>A. Tasissa, R. Lai, “Exact Reconstruction of Euclidean Distance Geometry Problem Using Low-rank Matrix Completion”, 
-  Accepted, IEEE Transactions of Information Theory. 
-  [<a href="https://arxiv.org/abs/1804.04310">Link</a>] [<a href="supplement.pdf">supplement</a>]</p></li>
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Abiy Tasissa. All rights reserved.</p>
+    </footer>
 
-<p><li>A. Tasissa, R. Lai, "Matrix Completion in a General Non-orthonormal Basis", Submitted to Foundations of Computational Mathematics.
-   [<a href="https://arxiv.org/abs/1812.05786">Link</a>]
-  </p></li>
-</ol>
-  	
-<h2> Awards</h2>
+    <script>
+        // Mobile Navigation Toggle
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
 
-<ul>
-<p><li>Richard and Maureen DiPrima Graduate Research Award in Mathematics, 
-Rensselaer Polytechnic Institute, Summer 2018</li></p>
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const nav = document.querySelector('.nav');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (!nav.contains(event.target)) {
+                navMenu.classList.remove('active');
+            }
+        });
 
-<p><li>Richard and Maureen DiPrima Graduate Research Award in Mathematics, 
-Rensselaer Polytechnic Institute, Summer 2017</li></p>
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-<p><li>Excellence in Undergraduate teaching, Massachusetts Institute of Technology Experimental Studies Group, 2012</li></p>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
 
-</ul>
-
-<h2> Talks</h2>
-<ul>
-
-<p><li>Exact Reconstruction of Euclidean Distance Geometry Problem using Low-rank Matrix Completion,
-July 10 2018, <a href="https://www.siam.org/Conferences/CM/Main/an18">SIAM Annual Meeting</a>, Portland, Oregon </li></p>
-<p><li>An Analysis of Local Coordinates Reconstruction of an Incomplete Manifold using Matrix Completion Theory,
-July 11 2018, <a href="https://www.siam.org/Conferences/CM/Main/an18">SIAM Annual Meeting</a>, Portland, Oregon </li></p>
-<p><li>
-Exact Reconstruction of Distance Geometry Problem Using Low-rank Matrix Completion, April 8 2017,
-Applied Mathematics Days,  Rensselaer Polytechnic Institute</li></p>
-<p><li>
-Exact Reconstruction of Distance Geometry Problem Using Low-rank Matrix Completion, February 14 2017,
-RTG Seminar, Rensselaer Polytechnic Institute </li></p>
-<p><li>Modeling and Optimization of Reach and Exposure in Television Advertisements, Jun 23 2017,
-Mathematical Problems in Industry Workshop, NJ Institute of Technology </li></p>
-<p><li>Coughing and Sneezing, Lydia Bourouiba, Abiy Tasissa, John Bush, 2010, 63rd Annual Meeting of the APS Division of Fluid Dynamics Volume 55, Number 16 </li></p>
-</ul>
-
-
-
-
-  	</div>
-  </div>
-
+        // Observe all fade-in elements
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
 </html>

@@ -1,123 +1,658 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publications - Abiy Tasissa</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --text-color: #333;
+            --text-light: #666;
+            --text-muted: #888;
+            --bg-light: #f8f9fa;
+            --bg-white: #ffffff;
+            --border-light: #e9ecef;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.15);
+            --radius: 8px;
+            --max-width: 1200px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--bg-light);
+        }
+
+        /* Navigation */
+        .nav {
+            background: var(--bg-white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--secondary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--bg-white);
+                flex-direction: column;
+                padding: 1rem 2rem;
+                box-shadow: var(--shadow);
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .nav-menu.active {
+                transform: translateX(0);
+            }
+
+            .nav-link::after {
+                display: none;
+            }
+        }
+
+        /* Main Content */
+        .main {
+            margin-top: 70px;
+            min-height: calc(100vh - 70px);
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: var(--bg-white);
+            border-radius: var(--radius);
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Publication Stats */
+        .pub-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--bg-white);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            background: var(--bg-white);
+            border: 2px solid var(--border-light);
+            border-radius: 25px;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-tab:hover, .filter-tab.active {
+            background: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        /* Publications List */
+        .publications {
+            background: var(--bg-white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .publication {
+            padding: 2rem;
+            border-bottom: 1px solid var(--border-light);
+            transition: background-color 0.3s ease;
+        }
+
+        .publication:last-child {
+            border-bottom: none;
+        }
+
+        .publication:hover {
+            background: var(--bg-light);
+        }
+
+        .pub-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .pub-authors {
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .pub-authors .author-self {
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+
+        .pub-venue {
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .pub-venue .journal {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .pub-abstract {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .pub-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background: var(--bg-light);
+            color: var(--text-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            border: 1px solid var(--border-light);
+        }
+
+        .pub-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .pub-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--secondary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--radius);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .pub-link:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .pub-link.arxiv {
+            background: #b31b1b;
+        }
+
+        .pub-link.doi {
+            background: #ff6b35;
+        }
+
+        .pub-link.github {
+            background: #333;
+        }
+        .pub-link.journal {
+        background-color: #17a2b8;
+        color: white;
+        }
+
+        .pub-link.slides {
+        background-color: #fd7e14;
+        color: white;
+        }
+
+        .pub-link.website {
+        background-color: #28a745;
+        color: white;
+        }
+
+        .pub-link.video {
+        background-color: #dc3545;
+        color: white;
+        }
+
+        .pub-link.data {
+        background-color: #6f42c1;
+        color: white;
+        }
+
+        .pub-link.pdf {
+        background-color: #dc3545;
+        color: white;
+        }
+       .pub-link.website:hover {
+        background-color: #218838;
+        }
+
+        /* Publication Status */
+        .pub-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .status-published {
+            background: rgba(39, 174, 96, 0.1);
+            color: var(--success-color);
+            border: 1px solid rgba(39, 174, 96, 0.3);
+        }
+
+        .status-submitted {
+            background: rgba(52, 152, 219, 0.1);
+            color: var(--secondary-color);
+            border: 1px solid rgba(52, 152, 219, 0.3);
+        }
+
+        .status-preprint {
+            background: rgba(243, 156, 18, 0.1);
+            color: #f39c12;
+            border: 1px solid rgba(243, 156, 18, 0.3);
+        }
+
+        /* Year Sections */
+        .year-section {
+            margin-bottom: 3rem;
+        }
+
+        .year-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0;
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+
+        .year-publications {
+            background: var(--bg-white);
+            border-radius: 0 0 var(--radius) var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            .page-header {
+                padding: 2rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .publication {
+                padding: 1.5rem;
+            }
+
+            .pub-links {
+                justify-content: center;
+            }
+
+            .filter-tabs {
+                justify-content: center;
+            }
+        }
+
+        /* Utility Classes */
+        .mb-2 { margin-bottom: 1rem; }
+        .mb-3 { margin-bottom: 1.5rem; }
+    </style>
 </head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Abiy Tasissa</a>
+            <button class="nav-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="#" class="nav-link active">Publications</a></li>
+                <li><a href="teaching.html" class="nav-link">Teaching</a></li>
+                <li><a href="cv.html" class="nav-link">CV</a></li>
 
-<nav>
-<ul>
-<li><a href="index.html">Home</a></li>
-<li><a href="publications.html">Publications</a></div></li>
-<li><a href="teaching.html">Teaching</a></div></li>
+            </ul>
+        </div>
+    </nav>
 
-</ul>
-</nav>
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Page Header -->
+            <header class="page-header fade-in">
+                <h1 class="page-title">Publications</h1>
+                <p class="page-subtitle">
+                    Research contributions published in journals and conference proceedings.
+                </p>
+            </header>
 
-<div class="container">
+            
+            <!-- Filter Tabs -->
+            <div class="filter-tabs fade-in" style="animation-delay: 0.2s;">
+                <button class="filter-tab active" onclick="filterPublications('all')">All Publications</button>
+                <button class="filter-tab" onclick="filterPublications('journal')">Journal Articles</button>
+                <button class="filter-tab" onclick="filterPublications('conference')">Conference Papers</button>
+                <button class="filter-tab" onclick="filterPublications('preprint')">Preprints</button>
+            </div>
 
-  	<div class="Publications">
- <a href="https://scholar.google.com/citations?user=QpCV5uIAAAAJ&hl=en"><img src="googlescholar.jpg" width="150" alt="SZ" /></a>
+        <div id="publications-container">
+        <p>Loading publications...</p>
+    </div>
 
-<h3>Preprints under review</h3>
-<ol>
-<li>
-Marshall Mueller, Murphy James M, and Abiy Tasissa. “Locality Regularized Reconstruction:
-Structured Sparsity and Delaunay Triangulations”. In: Sampling Theory, Signal Processing, and Data
-Analysis (2024). 
-</li>
-</ol>
+    <script>
+        // List of HTML files to load (in order)
+        const publicationFiles = [
+            'publications-2025.html',
+            'publications-2024.html',
+            'publications-2023.html', 
+            'publications-2022.html', 
+            'publications-2021.html', 
+            'publications-2020.html', 
+            'publications-2019.html', 
+            'publications-2016.html', 
 
-<h3> Journal articles </h3>
+            // Add more files as needed
+        ];
 
-<ol>
-<li>
-Samuel Lichtenberg and Abiy Tasissa. “Localization from structured distance matrices via low-rank matrix recovery
-”. In: IEEE
-Transactions of Information Theory (2024). 
-</li>
-<li>Abiy Tasissa, Emmanouil Theodosis, Bahareh Tolooshams, and Demba Ba. “Discriminative reconstruction
-via simultaneous dense and sparse coding”. In: Transactions on Machine Learning Research
-(2024). </li>
-<li>
-Samuel Lichtenberg and Abiy Tasissa. “A dual basis approach to multidimensional scaling”. In:
-Linear Algebra and its Applications 682 (2024), pp. 86–95.
-</li>
-<li> Abiy Tasissa, Pranay Tankala, James M Murphy, and Demba Ba. “K-Deep Simplex: Manifold
-Learning via Local Dictionaries”. In: IEEE Transactions on Signal Processing (2023).
-</li>
-<li> Demba Ba, Akshunna S Dogra, Rikab Gambhir, Abiy Tasissa, and Jesse Thaler. “SHAPER:
-Can You Hear the Shape of a Jet?” In: Journal of High Energy Physics (2023) 
-[<a href = "https://link.springer.com/article/10.1007/jhep06(2023)195">PDF</a>]
-</li>
-<li> Ahmed Ali Abbasi, Abiy Tasissa, and Shuchin Aeron. “R-local unlabeled sensing: A novel graph
-matching approach for multiview unlabeled sensing under local permutations”. In: IEEE Open Journal
-of Signal Processing 2 (2021), pp. 309–317 
-[<a href = "https://ieeexplore.ieee.org/abstract/document/9440727">PDF</a>]
-</li>
+        // Function to load multiple HTML files
+        async function loadPublications() {
+            const container = document.getElementById('publications-container');
+            container.innerHTML = '<p>Loading publications...</p>';
+            
+            try {
+                let combinedHTML = '';
+                
+                // Load each file
+                for (const filename of publicationFiles) {
+                    try {
+                        const response = await fetch(filename);
+                        if (response.ok) {
+                            const html = await response.text();
+                            combinedHTML += html + '\n';
+                        } else {
+                            console.warn(`Could not load ${filename}: ${response.status}`);
+                        }
+                    } catch (fileError) {
+                        console.warn(`Error loading ${filename}:`, fileError);
+                    }
+                }
+                
+                if (combinedHTML.trim()) {
+                    container.innerHTML = combinedHTML;
+                } else {
+                    container.innerHTML = '<p>No publication files found. Please check that the HTML files exist in the same directory.</p>';
+                }
+                
+            } catch (error) {
+                console.error('Error loading publications:', error);
+                container.innerHTML = '<p>Error loading publications.</p>';
+            }
+        }
 
-<li>Abiy Tasissa and Rongjie Lai. “Low-rank matrix completion in a general non-orthogonal basis”. In:
-Linear Algebra and its Applications 625 (2021), pp. 81–112 
-[<a href = "https://arxiv.org/abs/1812.05786">PDF</a>]
-</li>
-
-<li>Abiy Tasissa and Rongjie Lai. "Exact reconstruction of euclidean distance geometry problem using
-low-rank matrix completion”. In: IEEE Transactions on Information Theory 65.5 (2018), pp. 3124–3144 
-[<a href = "https://arxiv.org/abs/1804.04310">PDF</a>]</li>
-
-<li>Abiy F Tasissa, Martin Hautefeuille, John H Fitek, and Ra´ul A Radovitzky. “On the formation
-of Friedlander waves in a compressed-gas-driven shock tube”. In: Proceedings of the Royal Society A:
-Mathematical, Physical and Engineering Sciences 472.2186 (2016), p. 20150611 
-[<a href = "https://royalsocietypublishing.org/doi/10.1098/rspa.2015.0611">PDF</a>]</li>
-</li>
-</ol>
-<h3>Peer-reviewed conference proceedings</h3>
-
-<ol>
-<li>Scott Fullenbaum, Marshall Mueller, Abiy Tasissa, and James M Murphy. “Nonlinear unmixing
-of hyperspectral images via regularized Wasserstein dictionary learning.” In: 2024 IEEE International
-Geoscience and Remote Sensing Symposium IGARSS. IEEE. 2024. To appear.</li>
-<li>Scott Fullenbaum, Marshall Mueller, Abiy Tasissa, and James M Murphy. “Hyperspectral image
-clustering via learned representation in Wasserstein space”. In: 2024 IEEE International Geoscience and
-Remote Sensing Symposium IGARSS. IEEE. 2024. To appear. </li>
-<li>Marshall Mueller, Shuchin Aeron, James M Murphy, and Abiy Tasissa. “Geometrically Regularized
-Wasserstein Dictionary Learning”. In: Topological, Algebraic and Geometric Learning Workshops 2023.
-PMLR. 2023, pp. 384–403 </li>
-<li> Mattthew E Werenski, Ruijie Jiang, Abiy Tasissa, Shuchin Aeron, and James M Murphy. “Measure
-Estimation in the Barycentric Coding Model”. In: International Conference on Machine Learning.
-PMLR. 2022, pp. 23781–23803 
-[<a href = "https://proceedings.mlr.press/v162/werenski22a/werenski22a.pdf">PDF</a>]
-</li>
-<li>Ahmed Ali Abbasi, Abiy Tasissa, and Shuchin Aeron. “r-Local Unlabeled Sensing: Improved
-Algorithm and Applications”. In: ICASSP 2022-2022 IEEE International Conference on Acoustics,
-Speech and Signal Processing (ICASSP). IEEE. 2022, pp. 5593–5597 
-[<a href = "https://arxiv.org/abs/2110.14034">PDF</a>]
-</li>
-<li>Abiy Tasissa, Pranay Tankala, and Demba Ba. “Weighed l1 on the Simplex: Compressive Sensing
-Meets Locality”. In: 2021 IEEE Statistical Signal Processing Workshop (SSP). IEEE. 2021, pp. 476–480 
-[<a href="https://arxiv.org/pdf/2104.13894.pdf">PDF</a>]
-</li>
-<li>Abiy Tasissa, Duc Nguyen, and James M Murphy. “Deep diffusion processes for active learning
-of hyperspectral images”. In: 2021 IEEE International Geoscience and Remote Sensing Symposium
-IGARSS. IEEE. 2021, pp. 3665–3668 
-[<a href = "https://arxiv.org/abs/2101.03197">PDF</a>]
-</li>
-</ol>
-
-<h3>Peer-Reviewed workshop papers</h3>
-<ol>
-<li>Chandler Mack Smith, Samuel P Lichtenberg, HanQin Cai, and Abiy Tasissa. “Riemannian
-Optimization for Euclidean Distance Geometry”. In: OPT 2023: Optimization for Machine Learning.
-2023  </li>
-<li> Jonathan Huml, Abiy Tasissa, and Demba Ba. “Sparse, Geometric Autoencoder Models of V1”.
-In: NeurIPS 2022 Workshop on Symmetry and Geometry in Neural Representations. 2022 
-[<a href = "https://arxiv.org/abs/2302.11162">PDF</a>]
-</li>
-</ol>
+        // Load publications when page loads
+        document.addEventListener('DOMContentLoaded', loadPublications);
+    </script>
 
 
+    </main>
 
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Abiy Tasissa. All rights reserved.</p>
+    </footer>
 
+    <script>
+        // Mobile Navigation Toggle
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
 
-  	</div>
-  </div>
+        // Filter Publications
+        function filterPublications(type) {
+    const publications = document.querySelectorAll('.publication');
+    const yearSections = document.querySelectorAll('.year-section');
+    const tabs = document.querySelectorAll('.filter-tab');
+    
+    // Update active tab
+    tabs.forEach(tab => tab.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    // Show/hide publications
+    publications.forEach(pub => {
+        if (type === 'all' || pub.dataset.type === type) {
+            pub.style.display = 'block';
+        } else {
+            pub.style.display = 'none';
+        }
+    });
+    
+    // Show/hide year sections based on visible publications
+    yearSections.forEach(yearSection => {
+        const visiblePubs = yearSection.querySelectorAll('.publication[style*="block"], .publication:not([style*="none"])');
+        const hasVisiblePublications = Array.from(yearSection.querySelectorAll('.publication'))
+            .some(pub => pub.style.display !== 'none');
+        
+        if (hasVisiblePublications) {
+            yearSection.style.display = 'block';
+        } else {
+            yearSection.style.display = 'none';
+        }
+    });
+}
 
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const nav = document.querySelector('.nav');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (!nav.contains(event.target)) {
+                navMenu.classList.remove('active');
+            }
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
 </html>

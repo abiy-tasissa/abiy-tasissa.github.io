@@ -1,58 +1,709 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teaching - Abiy Tasissa</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --text-color: #333;
+            --text-light: #666;
+            --text-muted: #888;
+            --bg-light: #f8f9fa;
+            --bg-white: #ffffff;
+            --border-light: #e9ecef;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.15);
+            --radius: 8px;
+            --max-width: 1200px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--bg-light);
+        }
+
+        /* Navigation */
+        .nav {
+            background: var(--bg-white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--secondary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--bg-white);
+                flex-direction: column;
+                padding: 1rem 2rem;
+                box-shadow: var(--shadow);
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .nav-menu.active {
+                transform: translateX(0);
+            }
+
+            .nav-link::after {
+                display: none;
+            }
+        }
+
+        /* Main Content */
+        .main {
+            margin-top: 70px;
+            min-height: calc(100vh - 70px);
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: var(--bg-white);
+            border-radius: var(--radius);
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Current Teaching */
+        .current-teaching {
+            background: var(--bg-white);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .current-course {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+        }
+
+        .course-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .course-code {
+            font-weight: bold;
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+        }
+
+        .course-semester {
+            background: var(--secondary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .course-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Teaching Statistics */
+        .teaching-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--bg-white);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Institution Sections */
+        .institution-section {
+            background: var(--bg-white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+            overflow: hidden;
+        }
+
+        .institution-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 1.5rem 2rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .institution-content {
+            padding: 2rem;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .course-card {
+            background: var(--bg-light);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-light);
+        }
+
+        .course-card:hover {
+            background: var(--secondary-color);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .course-card .course-code {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .course-card:hover .course-code {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .course-card .course-title {
+            color: var(--primary-color);
+            margin-bottom: 0.75rem;
+        }
+
+        .course-card:hover .course-title {
+            color: white;
+        }
+
+        .course-semesters {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        .course-card:hover .course-semesters {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Teaching Philosophy */
+        .teaching-philosophy {
+            background: var(--bg-white);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+        }
+
+        .philosophy-content {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .philosophy-content p {
+            margin-bottom: 1rem;
+        }
+
+        /* Student Opportunities */
+        .student-opportunities {
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            color: white;
+            border-radius: var(--radius);
+            padding: 3rem 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .opportunities-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .opportunities-content {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: white;
+            color: var(--secondary-color);
+            text-decoration: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            .page-header {
+                padding: 2rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .course-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .course-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .opportunities-title {
+                font-size: 1.5rem;
+            }
+
+            .student-opportunities {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        /* Utility Classes */
+        .mb-2 { margin-bottom: 1rem; }
+        .mb-3 { margin-bottom: 1.5rem; }
+    </style>
 </head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Abiy Tasissa</a>
+            <button class="nav-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="publications.html" class="nav-link">Publications</a></li>
+                <li><a href="#" class="nav-link active">Teaching</a></li>
+                <li><a href="cv.html" class="nav-link">CV</a></li>
 
-<nav>
-<ul>
-<li><a href="index.html">Home</a></li>
-<li><a href="publications.html">Publications</a></div></li>
-<li><a href="teaching.html">Teaching</a></div></li>
+            </ul>
+        </div>
+    </nav>
 
-</ul>
-</nav>
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Page Header -->
+            <header class="page-header fade-in">
+                <h1 class="page-title">Teaching</h1>
+                <p class="page-subtitle">
+                    Dedicated to fostering mathematical understanding through innovative pedagogy 
+                    and comprehensive curriculum design across undergraduate and graduate levels.
+                </p>
+            </header>
 
-<div class="container">
-
-  	<div class="Teaching">
- 
- <p> In Spring 2024, I am teaching a graduate course on numerical analysis MATH 225. 
-
-<h3> Department of Mathematics, Tufts University </h3>
-<ol>
-<li>MATH 32 (Calculus I). Fall 2019.</li>
-<li>MATH 70 (Linear Algebra). Fall 2021, Spring 2022. </li>
-<li>MATH 123 (Mathematical Aspects of Data Analysis). Summer 2020, Summer 2021, Fall 2020, Spring 2020, Fall 2021.</li>
-<li>MATH 125 (Numerical Analysis). Fall 2022. </li>
-<li>MATH 126 (Numerical Linear Algebra). Spring 2020, Fall 2021.</li>
-<li>MATH 190 (Topics in Linear Algebra). Spring 2020. </li>
-<li>MATH 190 (Nonlinear optimization). Spring 2023. </li>
-<li>MATH 225 (Numerical analysis). Spring 2024. </li>
-<li>MATH 290 (Matrix analysis and applications). Fall 2023. </li>
-</ol>
-
-<h3> Department of Mathematics, Rensselaer Polytechnic Institute </h3>
-<ol><li> TA for PDEs of Mathematical Physics. Spring 2019.
-<li> TA for Advanced Calculus. Fall 2018.</li>
-<li> TA for Complex Variables with Applications. Spring 2016.</li>
-<li> TA for Foundations of Applied Mathematics. Fall 2015.</li>
-<li> TA for Introduction to Differential Equations. Spring 2015.</li>
-<li> TA for Multivariable Calculus and Matrix Algebra. Fall 2014.</li>
-</ol>
-
-<h3>Massachusetts Institute of Technology </h3>
-<ol>
-<li> TA for Mechanics and Structures, Department of Aeronautics and Astronautics. Fall 2013. </li>
-
-<li> TA for Multivariable Calculus, Experimental Studies Group. Fall 2009 - Spring 2012. </li>
-
-<li> Instructor for Introduction to Existentialism, Educational Studies Program. Summer 2010.  </li>
-</ol>
+            <!-- Current Teaching -->
+            <section class="current-teaching fade-in" style="animation-delay: 0.1s;">
+                <h2 class="section-title">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    Current Teaching
+                </h2>
+                <div class="current-course">
+                    <div class="course-header">
+                        <div class="course-code">MATH 125</div>
+                        <div class="course-semester">Fall 2025</div>
+                    </div>
+                    <div class="course-title">Numerical Analysis (Undergraduate course)</div>
+                    <p class="course-description">
+Analysis of algorithms involving computation with real numbers. Interpolation, methods for solving linear and nonlinear systems of equations, numerical integration, numerical methods for solving ordinary differential equations.                        
+                    </p>
+                </div>
+            </section>
 
 
+            <!-- Tufts University -->
+            <section class="institution-section fade-in" style="animation-delay: 0.3s;">
+                <div class="institution-header">
+                    <i class="fas fa-university"></i>
+                    Department of Mathematics, Tufts University
+                </div>
+                <div class="institution-content">
+                    <div class="course-grid">
+                        <div class="course-card">
+                            <div class="course-code">MATH 32</div>
+                            <div class="course-title">Calculus I</div>
+                            <div class="course-semesters">Fall 2019</div>
+                        </div>
+                        <div class="course-card">
+                            <div class="course-code">MATH 70</div>
+                            <div class="course-title">Linear Algebra</div>
+                            <div class="course-semesters">Fall 2021, Spring 2022</div>
+                        </div>
+                        <div class="course-card">
+                            <div class="course-code">MATH 123</div>
+                            <div class="course-title">Mathematical Aspects of Data Analysis</div>
+                            <div class="course-semesters">Summer 2020, Spring 2020, Summer 2021, Fall 2020, Fall 2021</div>
+                        </div>
+                        <div class="course-card">
+                            <div class="course-code">MATH 125</div>
+                            <div class="course-title">Numerical Analysis</div>
+                            <div class="course-semesters">Fall 2022</div>
+                        </div>
+                        <div class="course-card">
+                            <div class="course-code">MATH 126</div>
+                            <div class="course-title">Numerical Linear Algebra</div>
+                            <div class="course-semesters">Spring 2020, Fall 2021</div>
+                        </div>
+                        <div class="course-card">
+                            <div class="course-code">MATH 190</div>
+                            <div class="course-title">Topics in Linear Algebra</div>
+                            <div class="course-semesters">Spring 2020</div>
+                        </div>
+                        <div class="course-card">
+                            <div class="course-code">MATH 190</div>
+                            <div class="course-title">Nonlinear Optimization</div>
+                            <div class="course-semesters">Spring 2023</div>
+                        </div>
+                        <div class="course-card">
+                            <div class="course-code">MATH 225</div>
+                            <div class="course-title">Numerical Analysis</div>
+                            <div class="course-semesters">Spring 2024</div>
+                        </div>
+                        <div class="course-card">
+                            <div class="course-code">MATH 290</div>
+                            <div class="course-title">Matrix Analysis and Applications</div>
+                            <div class="course-semesters">Fall 2023</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
+            <!-- Rensselaer Polytechnic Institute -->
+            <section class="institution-section fade-in" style="animation-delay: 0.4s;">
+                <div class="institution-header">
+                    <i class="fas fa-graduation-cap"></i>
+                    Department of Mathematics, Rensselaer Polytechnic Institute
+                </div>
+                <div class="institution-content">
+                    <div class="course-grid">
+                        <div class="course-card">
+                            <div class="course-code">Graduate TA</div>
+                            <div class="course-title">PDEs of Mathematical Physics</div>
+                            <div class="course-semesters">Spring 2019</div>
+                        </div>
+                        <div class="course-card">
+                            <div class="course-code">Graduate TA</div>
+                            <div class="course-title">Advanced Calculus</div>
+                            <div class="course-semesters">Fall 2018</div>
+                        </div>
+                        <div class="course-card">
+                            <div class="course-code">Graduate TA</div>
+                            <div class="course-title">Complex Variables with Applications</div>
+                            <div class="course-semesters">Spring 2016</div>
+                        </div>
+                        <div class="course-card">
+                            <div class="course-code">Graduate TA</div>
+                            <div class="course-title">Foundations of Applied Mathematics</div>
+                            <div class="course-semesters">Fall 2015</div>
+                        </div>
+                        <div class="course-card">
+                            <div class="course-code">Graduate TA</div>
+                            <div class="course-title">Introduction to Differential Equations</div>
+                            <div class="course-semesters">Spring 2015</div>
+                        </div>
+                        <div class="course-card">
+                            <div class="course-code">Graduate TA</div>
+                            <div class="course-title">Multivariable Calculus and Matrix Algebra</div>
+                            <div class="course-semesters">Fall 2014</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-  	</div>
-  </div>
+            <!-- Massachusetts Institute of Technology -->
+            <section class="institution-section fade-in" style="animation-delay: 0.5s;">
+                <div class="institution-header">
+                    <i class="fas fa-atom"></i>
+                    Massachusetts Institute of Technology
+                </div>
+                <div class="institution-content">
+                    <div class="course-grid">
+                        <div class="course-card">
+                            <div class="course-code">Aero/Astro TA</div>
+                            <div class="course-title">Mechanics and Structures</div>
+                            <div class="course-semesters">Fall 2013</div>
+                        </div>
+                        <div class="course-card">
+                            <div class="course-code">ESG TA</div>
+                            <div class="course-title">Multivariable Calculus</div>
+                            <div class="course-semesters">Fall 2009 - Spring 2012</div>
+                        </div>
+                        <div class="course-card">
+                            <div class="course-code">ESP Instructor</div>
+                            <div class="course-title">Introduction to Existentialism</div>
+                            <div class="course-semesters">Summer 2010</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
+            <!-- Teaching Philosophy -->
+            <section class="teaching-philosophy fade-in" style="animation-delay: 0.6s;">
+                <h2 class="section-title">
+                    <i class="fas fa-lightbulb"></i>
+                    Teaching Philosophy
+                </h2>
+                <div class="philosophy-content">
+    <p>
+        My teaching philosophy is rooted in making mathematics both rigorous and engaging through 
+        project-based learning, historical perspective, and interdisciplinary applications. As a 
+        teaching assistant at MIT’s Experimental Studies Group, I helped design applied problems 
+        that connected core concepts to real contexts, an initiative that contributed to my 
+        receiving the Excellence in Undergraduate Teaching award.
+    </p>
+    <p>
+        In my courses at Tufts, I have emphasized active learning through projects that use real data. 
+        For example, students in numerical analysis estimated implied volatility with the Black–Scholes 
+        model, while others in data analysis applied mathematical methods to challenges ranging from 
+        image recognition to public health. These experiences balance theory with practice and have 
+        consistently inspired students to explore mathematics more deeply.
+    </p>
+    <p>
+        I believe mathematics is best learned when students see it as both a body of knowledge and a 
+        way of thinking. By incorporating historical readings and fostering interdisciplinary projects, 
+        I aim to show how ideas evolve and how mathematics provides tools for diverse fields. My goal is 
+        to create an environment where students feel challenged, supported, and motivated to approach 
+        problems creatively and critically.
+    </p>
+</div>
+
+            </section>
+
+         
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Abiy Tasissa. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Mobile Navigation Toggle
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const nav = document.querySelector('.nav');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (!nav.contains(event.target)) {
+                navMenu.classList.remove('active');
+            }
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
 </html>
